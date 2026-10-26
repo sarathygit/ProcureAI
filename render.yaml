@@ -1,0 +1,14 @@
+# Render Blueprint — deploys the ProcureAI Streamlit app as a web service.
+# Render dashboard → New → Blueprint → select this repo.
+services:
+  - type: web
+    name: procureai
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true
+    healthCheckPath: /_stcore/health
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ProcureAI</title>
+  <meta name="description" content="ProcureAI turns supplier quotations into compliant, risk-checked, human-approved purchase orders. Beyond the lowest price — towards the right purchase.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+  <style>
+    /* ------------------------------------------------------------------ tokens */
+    :root {
+      --bg: #f7f8f6;
+      --surface: #ffffff;
+      --surface-2: #eef2f1;
+      --ink: #0d1b24;
+      --ink-2: #44535d;
+      --ink-3: #6b7a84;
+      --line: #dde3e2;
+      --brand: #0f3d5e;
+      --brand-2: #1f6f8b;
+      --accent: #2a9d8f;
+      --good: #1f8a3b;
+      --warn: #b7791f;
+      --bad: #c53030;
+      --shadow: 0 1px 2px rgba(13,27,36,.06), 0 8px 24px rgba(13,27,36,.06);
+      --radius: 14px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #0b1418; --surface: #121e24; --surface-2: #17262d; --ink: #eaf1f2; --ink-2: #b3c2c7;
+        --ink-3: #8798a0; --line: #233740; --brand: #7cc3e0; --brand-2: #5fb3d1; --accent: #4fd1b8;
+        --good: #48bb78; --warn: #ecc94b; --bad: #fc8181; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+      }
+    }
+    :root[data-theme="dark"] {
+      --bg: #0b1418; --surface: #121e24; --surface-2: #17262d; --ink: #eaf1f2; --ink-2: #b3c2c7;
+      --ink-3: #8798a0; --line: #233740; --brand: #7cc3e0; --brand-2: #5fb3d1; --accent: #4fd1b8;
+      --good: #48bb78; --warn: #ecc94b; --bad: #fc8181; --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    }
+
+    /* ------------------------------------------------------------------ base */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 Inter, system-ui, -apple-system, sans-serif; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 72px 0; }
+    h1, h2, h3 { line-height: 1.15; margin: 0; letter-spacing: -0.02em; }
+    h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    .eyebrow { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .lead { color: var(--ink-2); font-size: 1.08rem; max-width: 680px; }
+    .muted { color: var(--ink-3); }
+
+    /* ------------------------------------------------------------------ nav */
+    nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 85%, transparent);
+          backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 12px; }
+    .logo { font-weight: 800; font-size: 1.1rem; text-decoration: none; display: flex; gap: 8px; align-items: center; }
+    .nav-links { display: flex; gap: 22px; align-items: center; font-size: .92rem; }
+    .nav-links a { text-decoration: none; color: var(--ink-2); }
+    .nav-links a:hover { color: var(--ink); }
+    @media (max-width: 720px) { .nav-links a.hide-sm { display: none; } }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 10px; font-weight: 600;
+           text-decoration: none; border: 1px solid transparent; cursor: pointer; font-size: .95rem; transition: transform .15s, box-shadow .15s; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary { background: var(--accent); color: #062420; box-shadow: var(--shadow); }
+    .btn-ghost { border-color: var(--line); background: var(--surface); color: var(--ink); }
+    .btn-sm { padding: 7px 14px; font-size: .86rem; }
+
+    /* ------------------------------------------------------------------ hero */
+    .hero { padding: 84px 0 56px; background:
+            radial-gradient(900px 400px at 85% -10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent),
+            radial-gradient(700px 380px at 0% 10%, color-mix(in srgb, var(--brand-2) 18%, transparent), transparent); }
+    .hero h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); font-weight: 800; max-width: 860px; }
+    .hero h1 span { background: linear-gradient(90deg, var(--brand-2), var(--accent)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero .lead { margin: 20px 0 30px; font-size: 1.15rem; }
+    .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 48px; }
+    .stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; }
+    .stat b { display: block; font-size: 1.6rem; font-weight: 800; }
+    .stat span { color: var(--ink-3); font-size: .88rem; }
+    @media (max-width: 760px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ------------------------------------------------------------------ cards */
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 34px; }
+    @media (max-width: 900px) { .grid-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 760px) { .grid-3, .grid-4 { grid-template-columns: 1fr; } }
+    .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+    .card h3 { font-size: 1.05rem; margin: 10px 0 6px; }
+    .card p { margin: 0; color: var(--ink-2); font-size: .94rem; }
+    .icon { width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center; font-size: 1.3rem; background: var(--surface-2); }
+    .problem .card { border-top: 3px solid var(--bad); }
+
+    /* ------------------------------------------------------------------ steps */
+    .steps { counter-reset: step; }
+    .step { position: relative; }
+    .step::before { counter-increment: step; content: counter(step); position: absolute; top: 18px; right: 18px; font-weight: 800;
+                    font-size: 2rem; color: var(--line); }
+    .tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .06em; padding: 3px 8px; border-radius: 999px;
+           background: var(--surface-2); color: var(--ink-2); margin-top: 12px; }
+    .tag.rule { color: var(--brand-2); }
+    .tag.human { color: var(--good); }
+
+    /* ------------------------------------------------------------------ features */
+    .feature { display: flex; gap: 14px; align-items: flex-start; }
+    .feature .icon { flex: 0 0 42px; }
+    .features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 34px; }
+    @media (max-width: 760px) { .features { grid-template-columns: 1fr; } }
+
+    /* ------------------------------------------------------------------ demo */
+    .demo-frame { margin-top: 28px; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--surface);
+                  box-shadow: var(--shadow); }
+    .demo-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--line);
+                background: var(--surface-2); font-size: .85rem; color: var(--ink-3); flex-wrap: wrap; }
+    .dots { display: flex; gap: 6px; } .dots i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); display: block; }
+    .demo-body { height: min(78vh, 760px); display: grid; place-items: center; text-align: center; padding: 20px; }
+    .demo-body iframe { width: 100%; height: 100%; border: 0; display: block; }
+    .demo-placeholder p { color: var(--ink-2); max-width: 460px; margin: 10px auto 20px; }
+    .spinner { width: 34px; height: 34px; border: 3px solid var(--line); border-top-color: var(--accent); border-radius: 50%;
+               animation: spin 1s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ------------------------------------------------------------------ demo script */
+    .script { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 28px; }
+    @media (max-width: 900px) { .script { grid-template-columns: 1fr; } }
+    .script .card { padding: 16px; } .script .card b { color: var(--accent); }
+
+    /* ------------------------------------------------------------------ architecture */
+    .arch { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 34px; align-items: stretch; }
+    .arch .card { padding: 16px; text-align: center; } .arch code { font-size: .8rem; color: var(--brand-2); }
+    .arch .arrow { display: none; }
+    @media (max-width: 900px) { .arch { grid-template-columns: 1fr; } }
+    .principle { margin-top: 26px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .pill { border: 1px solid var(--line); background: var(--surface); padding: 8px 14px; border-radius: 999px; font-size: .9rem; font-weight: 600; }
+
+    footer { border-top: 1px solid var(--line); padding: 34px 0; color: var(--ink-3); font-size: .9rem; }
+    footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .theme-toggle { background: none; border: 1px solid var(--line); color: var(--ink-2); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="logo" href="#top">🛒 ProcureAI</a>
+      <div class="nav-links">
+        <a class="hide-sm" href="#how">How it works</a>
+        <a class="hide-sm" href="#features">Features</a>
+        <a class="hide-sm" href="#demo">Live demo</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle colour theme">◐</button>
+        <a class="btn btn-primary btn-sm" data-app-link href="#" target="_blank" rel="noopener">Launch app ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="wrap">
+      <div class="eyebrow">Autonomous requirement-to-quotation procurement</div>
+      <h1>Beyond the lowest price. <span>Towards the right purchase.</span></h1>
+      <p class="lead">ProcureAI reads supplier quotations, enforces every mandatory requirement, uncovers hidden costs and
+        fraud signals, negotiates better terms and produces a human-approved, GST-compliant purchase order — with a full audit trail.</p>
+      <div class="cta">
+        <a class="btn btn-primary" data-app-link href="#" target="_blank" rel="noopener">▶ Launch live demo</a>
+        <a class="btn btn-ghost" href="https://github.com/sarathygit/ProcureAI" target="_blank" rel="noopener">View source on GitHub</a>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>0</b><span>values ever assumed</span></div>
+        <div class="stat"><b>100%</b><span>deterministic decisions</span></div>
+        <div class="stat"><b>12</b><span>decision &amp; workflow features</span></div>
+        <div class="stat"><b>Offline</b><span>no data leaves the machine</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="problem">
+    <div class="wrap">
+      <div class="eyebrow">The problem</div>
+      <h2>Picking the cheapest quote is how bad purchases happen.</h2>
+      <p class="lead">Procurement teams compare quotations by hand, under time pressure, across inconsistent PDFs and spreadsheets.</p>
+      <div class="grid-3">
+        <div class="card"><div class="icon">🧩</div><h3>Missing specifications</h3><p>A quote that never states its warranty or delivery time quietly gets "assumed" compliant.</p></div>
+        <div class="card"><div class="icon">🕳️</div><h3>Hidden costs</h3><p>Freight "at actuals", installation extra, 6-month battery cover — buried in the fine print.</p></div>
+        <div class="card"><div class="icon">🎭</div><h3>Fraud &amp; collusion</h3><p>Invalid GST numbers, too-good-to-be-true prices and copy-pasted rival bids go unnoticed.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" style="background: var(--surface-2);">
+    <div class="wrap">
+      <div class="eyebrow">How it works</div>
+      <h2>Rules decide. Humans approve.</h2>
+      <p class="lead">Every compliance check, cost calculation and ranking is deterministic, explainable and repeatable — so the decision can be defended to an auditor.</p>
+      <div class="grid-4 steps">
+        <div class="card step"><div class="icon">📄</div><h3>Read</h3><p>PDF &amp; Excel quotations are parsed into structured data. Every value gets a confidence score and the sentence it came from.</p><span class="tag">CONFIDENCE-SCORED</span></div>
+        <div class="card step"><div class="icon">✅</div><h3>Validate</h3><p>Hard gates on RAM, storage, warranty, delivery and budget. Landed cost = base + GST + shipping.</p><span class="tag rule">DETERMINISTIC RULES</span></div>
+        <div class="card step"><div class="icon">🤝</div><h3>Clarify &amp; negotiate</h3><p>Missing data triggers a drafted supplier e-mail; a negotiation agent uses rival quotes as leverage.</p><span class="tag">AGENTIC</span></div>
+        <div class="card step"><div class="icon">🖊️</div><h3>Approve</h3><p>Policy checks, value-based approval chain, GST-compliant purchase order and a 1-page audit memo.</p><span class="tag human">HUMAN IN THE LOOP</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="eyebrow">Features</div>
+      <h2>Everything between "we need 20 laptops" and a signed PO.</h2>
+      <div class="features">
+        <div class="card feature"><div class="icon">📊</div><div><h3>Compliance-first evaluation</h3><p>Eligibility before price, strict landed-cost ranking, weighted composite score and trade-off insights such as "relax delivery by 2 days to save ₹94,600".</p></div></div>
+        <div class="card feature"><div class="icon">🔍</div><div><h3>Extraction with confidence</h3><p>Understands messy wording ("half a terabyte", "a fortnight"). Anything below 80% confidence waits for human confirmation.</p></div></div>
+        <div class="card feature"><div class="icon">🛡️</div><div><h3>Fraud &amp; hidden-cost detection</h3><p>GSTIN checksum validation, below-market pricing, fine-print extras and bid-collusion detection between suppliers.</p></div></div>
+        <div class="card feature"><div class="icon">📉</div><div><h3>Supplier risk score</h3><p>Delivery history, defect rate and disputes feed a 0–100 risk score and a risk-adjusted cost.</p></div></div>
+        <div class="card feature"><div class="icon">🤝</div><div><h3>Negotiation agent</h3><p>Multi-round negotiation against simulated supplier personas with hidden limits. It never accepts a deal on its own.</p></div></div>
+        <div class="card feature"><div class="icon">🧮</div><div><h3>Decision lab</h3><p>Total cost of ownership, what-if simulator and a capacity-aware split-order optimizer.</p></div></div>
+        <div class="card feature"><div class="icon">📜</div><div><h3>Policy &amp; approval chain</h3><p>Minimum quotes, MSME preference, blacklist and risk rules; approvals scale with order value.</p></div></div>
+        <div class="card feature"><div class="icon">💬</div><div><h3>Chat-based requests</h3><p>"Two dozen laptops, 32 gigs, by end of next week, 85k each" becomes a structured requirement.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="demo" style="background: var(--surface-2);">
+    <div class="wrap">
+      <div class="eyebrow">Live demo</div>
+      <h2>Try it with the built-in sample quotations.</h2>
+      <p class="lead">Click <b>📂 Load Sample Quotations</b> inside the app. Five suppliers are pre-loaded: one compliant, one cheap but non-compliant, one incomplete, one messy with hidden costs, and one copied bid.</p>
+
+      <div class="script">
+        <div class="card"><b>1 · Evaluation</b><p>See the cheapest bid rejected and the compliant winner ranked by landed cost.</p></div>
+        <div class="card"><b>2 · AI Extraction</b><p>Confirm Delta's low-confidence values read from messy wording.</p></div>
+        <div class="card"><b>3 · Risk &amp; Fraud</b><p>Spot the invalid GSTIN, hidden fees and the copied quotation.</p></div>
+        <div class="card"><b>4 · Negotiation</b><p>Negotiate Gamma into compliance and watch the savings counter.</p></div>
+        <div class="card"><b>5 · Approval</b><p>Run the approval chain and download the PO and audit memo.</p></div>
+      </div>
+
+      <div class="demo-frame">
+        <div class="demo-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <span id="appHost">procureai</span>
+          <a class="btn btn-ghost btn-sm" data-app-link href="#" target="_blank" rel="noopener">Open full screen ↗</a>
+        </div>
+        <div class="demo-body" id="demoBody">
+          <div class="demo-placeholder">
+            <div class="icon" style="margin: 0 auto; font-size: 1.6rem; width: 56px; height: 56px;">🛒</div>
+            <h3 style="margin-top: 14px;">Load the live app here</h3>
+            <p>The app runs on a free server that sleeps when idle — the first load can take up to a minute while it wakes up.</p>
+            <button class="btn btn-primary" id="loadDemo">▶ Load live demo</button>
+          </div>
+        </div>
+      </div>
+      <p class="muted" style="font-size: .88rem; margin-top: 12px;">Tip: for uploading your own files, use “Open full screen” — some browsers restrict uploads inside embedded frames.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="eyebrow">Architecture</div>
+      <h2>Small, auditable modules.</h2>
+      <div class="arch">
+        <div class="card"><div class="icon" style="margin: 0 auto;">📥</div><h3>Ingest</h3><code>extractor.py<br>ai_extractor.py</code></div>
+        <div class="card"><div class="icon" style="margin: 0 auto;">⚖️</div><h3>Decide</h3><code>engine.py</code></div>
+        <div class="card"><div class="icon" style="margin: 0 auto;">🧠</div><h3>Analyse</h3><code>intelligence.py<br>negotiator.py</code></div>
+        <div class="card"><div class="icon" style="margin: 0 auto;">🗂️</div><h3>Workflow</h3><code>workflow.py</code></div>
+        <div class="card"><div class="icon" style="margin: 0 auto;">🖥️</div><h3>Interface</h3><code>app.py (Streamlit)</code></div>
+      </div>
+      <div class="principle">
+        <span class="pill">Python · Pydantic</span><span class="pill">PyMuPDF · openpyxl</span><span class="pill">ReportLab PDFs</span>
+        <span class="pill">Streamlit · Altair</span><span class="pill">Optional Claude integration</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>🛒 ProcureAI — Beyond the Lowest Price. Towards the Right Purchase.</span>
+      <span>Demo data (supplier history, market prices) is simulated. <a href="https://github.com/sarathygit/ProcureAI" target="_blank" rel="noopener">GitHub</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // ── Set this to your Render URL after deploying the Streamlit app ──────────────
+    const APP_URL = "https://procureai.onrender.com";
+
+    document.querySelectorAll("[data-app-link]").forEach(a => { a.href = APP_URL; });
+    try { document.getElementById("appHost").textContent = new URL(APP_URL).host; } catch (e) {}
+
+    document.getElementById("loadDemo").addEventListener("click", () => {
+      const body = document.getElementById("demoBody");
+      body.innerHTML = '<div id="demoWait"><div class="spinner"></div><p class="muted">Waking up the server… this can take up to a minute.</p></div>';
+      const frame = document.createElement("iframe");
+      frame.src = APP_URL.replace(/\/$/, "") + "/?embed=true";
+      frame.title = "ProcureAI live app";
+      frame.allow = "clipboard-write";
+      frame.style.display = "none";
+      frame.addEventListener("load", () => {
+        const wait = document.getElementById("demoWait");
+        if (wait) wait.remove();
+        body.style.padding = "0";
+        frame.style.display = "block";
+      }, { once: true });
+      body.appendChild(frame);
+    });
+
+    // Theme toggle (remembered per browser)
+    const root = document.documentElement;
+    try { const saved = localStorage.getItem("procureai-theme"); if (saved) root.dataset.theme = saved; } catch (e) {}
+    document.getElementById("themeToggle").addEventListener("click", () => {
+      const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+      root.dataset.theme = dark ? "light" : "dark";
+      try { localStorage.setItem("procureai-theme", root.dataset.theme); } catch (e) {}
+    });
+  </script>
+</body>
+</html>

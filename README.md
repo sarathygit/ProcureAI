@@ -81,3 +81,11 @@ by real data sources.
 Set `ANTHROPIC_API_KEY` to let Claude read very messy or scanned documents and draft negotiation /
 chat messages. Claude never makes compliance, cost or ranking decisions, and every feature has a
 deterministic offline fallback.
+
+## Deployment
+
+- **App (Render):** `render.yaml` is a Render Blueprint. In Render choose *New → Blueprint*, pick this repo, and deploy.
+  The free tier sleeps when idle; open the link a minute before presenting.
+- **Landing page (Vercel):** `landing/` is a static site. In Vercel choose *Add New → Project*, import this repo,
+  set **Root Directory** to `landing` and **Framework Preset** to *Other*, then deploy.
+  If your Render URL is not `https://procureai.onrender.com`, update `APP_URL` near the bottom of `landing/index.html`.
