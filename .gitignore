@@ -1,0 +1,15 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Local tooling
+.claude/
+.streamlit/secrets.toml
+.env
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/

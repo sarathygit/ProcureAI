@@ -1,0 +1,48 @@
+{
+ "Apex Solutions": {
+  "orders_completed": 42,
+  "on_time_rate": 0.93,
+  "defect_rate": 0.012,
+  "disputes": 0,
+  "years_active": 9,
+  "avg_delay_days": 1.0,
+  "capacity_units": 12
+ },
+ "Beta Tech Enterprises": {
+  "orders_completed": 25,
+  "on_time_rate": 0.7,
+  "defect_rate": 0.06,
+  "disputes": 3,
+  "years_active": 6,
+  "avg_delay_days": 6.5,
+  "capacity_units": 100
+ },
+ "Gamma Systems": {
+  "orders_completed": 18,
+  "on_time_rate": 0.89,
+  "defect_rate": 0.02,
+  "disputes": 0,
+  "years_active": 4,
+  "avg_delay_days": 2.0,
+  "capacity_units": 40
+ },
+ "Delta Infotech": {
+  "orders_completed": 3,
+  "on_time_rate": 0.55,
+  "defect_rate": 0.08,
+  "disputes": 2,
+  "years_active": 1,
+  "avg_delay_days": 9.0,
+  "capacity_units": 50
+ },
+ "Old Mart Computers": {
+  "orders_completed": 12,
+  "on_time_rate": 0.6,
+  "defect_rate": 0.1,
+  "disputes": 6,
+  "years_active": 8,
+  "avg_delay_days": 12.0,
+  "capacity_units": 30,
+  "blacklisted": true
+ }
+}
