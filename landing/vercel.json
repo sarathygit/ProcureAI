@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/", "destination": "https://procureai-4az0.onrender.com/", "permanent": false },
+    { "source": "/:path*", "destination": "https://procureai-4az0.onrender.com/", "permanent": false }
+  ]
+}
