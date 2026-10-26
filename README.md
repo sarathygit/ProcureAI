@@ -88,4 +88,4 @@ deterministic offline fallback.
   The free tier sleeps when idle; open the link a minute before presenting.
 - **Landing page (Vercel):** `landing/` is a static site. In Vercel choose *Add New → Project*, import this repo,
   set **Root Directory** to `landing` and **Framework Preset** to *Other*, then deploy.
-  If your Render URL is not `https://procureai.onrender.com`, update `APP_URL` near the bottom of `landing/index.html`.
+  The live app is at https://procureai-4az0.onrender.com; if it changes, update `APP_URL` near the bottom of `landing/index.html`.
